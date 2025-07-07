@@ -9,6 +9,6 @@ typedef struct
     int level;
 } Player;
 
-void initPlayer(Player *p)
+void initPlayer(Player *p);
 
 #endif // !PLAYER_H
