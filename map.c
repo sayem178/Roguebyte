@@ -15,7 +15,7 @@ void drawMap(Player p, Enemy e)
             {
                 printf("@ ");
             }
-            if (i == e.y && j == e.x && e.alive == 1)
+            else if (i == e.y && j == e.x && e.alive == 1)
             {
                 printf("E ");
             }
