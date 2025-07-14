@@ -1,20 +1,28 @@
 #include <stdio.h>
 #include "map.h"
 #include "player.h"
+#include "enemy.h"
 
-void drawMap(Player p)
+void drawMap(Player p, Enemy e)
 {
+    printf("HP: %d | XP: %d | Level: %d\n", p.hp, p.xp, p.level);
+
     for (size_t i = 0; i < MAP_HEIGHT; i++)
     {
         for (size_t j = 0; j < MAP_WIDTH; j++)
         {
             if (i == p.y && j == p.x)
             {
-                printf("@");
+                printf("@ ");
             }
+            if (i == e.y && j == e.x && e.alive == 1)
+            {
+                printf("E ");
+            }
+
             else
             {
-                printf(".");
+                printf(". ");
             }
         }
         printf("\n");

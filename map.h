@@ -3,7 +3,8 @@
 #include "player.h"
 #include <stdio.h>
 #include <stddef.h>
+#include "enemy.h"
 
-void drawMap(Player p);
+void drawMap(Player p, Enemy e);
 
 void movePlayer(Player*p, char dir);
