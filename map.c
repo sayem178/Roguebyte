@@ -1,6 +1,25 @@
 #include <stdio.h>
 #include "map.h"
 #include "player.h"
+
+void drawMap(Player p)
+{
+    for (size_t i = 0; i < MAP_HEIGHT; i++)
+    {
+        for (size_t j = 0; j < MAP_WIDTH; j++)
+        {
+            if (i == p.y && j == p.x)
+            {
+                printf("@");
+            }
+            else
+            {
+                printf(".");
+            }
+        }
+        printf("\n");
+    }
+}
 void movePlayer(Player *p, char dir)
 {
     switch (dir)
