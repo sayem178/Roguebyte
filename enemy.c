@@ -2,7 +2,7 @@
 #include "enemy.h" // Ensure Enemy struct is defined
 
 // Set starting values for player
-void initPlayer(Enemy *e)
+void initEnemy(Enemy *e)
 {
     e->x = 5;        // Starting x position
     e->y = 5;        // Starting y position
