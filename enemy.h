@@ -1,6 +1,6 @@
 #ifndef ENEMY_H
 #define ENEMY_H
-
+#define MAX_ENEMIES 3
 typedef struct 
 {
     int x,y;
@@ -8,7 +8,7 @@ typedef struct
     int alive;
 }Enemy;
 
-void initEnemy(Enemy*e);
+void initEnemy(Enemy enemies[], int count);
 
 
 

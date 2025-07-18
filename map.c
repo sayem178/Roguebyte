@@ -3,60 +3,72 @@
 #include "player.h"
 #include "enemy.h"
 
-void drawMap(Player p, Enemy e)
+void drawMap(Player player, Enemy enemies[], int enemyCount)
 {
-    printf("HP: %d | XP: %d | Level: %d\n", p.hp, p.xp, p.level);
+    printf("HP: %d | XP: %d | Level: %d\n", player.hp, player.xp, player.level);
 
     for (size_t i = 0; i < MAP_HEIGHT; i++)
     {
         for (size_t j = 0; j < MAP_WIDTH; j++)
         {
-            if (i == p.y && j == p.x)
+            if (i == player.y && j == player.x)
             {
                 printf("@ ");
             }
-            else if (i == e.y && j == e.x && e.alive == 1)
-            {
-                printf("E ");
-            }
-
             else
             {
-                printf(". ");
+                int enemyFound = 0;
+                for (int k = 0; k < enemyCount; k++)
+                {
+                    if (i == enemies[k].y && j == enemies[k].x && enemies[k].alive == 1)
+                    {
+                        printf("E ");
+                        enemyFound = 1;
+                        break;
+                    }
+                }
+                if (enemyFound)
+                {
+                    // Enemy was printed, skip printing '.'
+                }
+                else
+                {
+                    printf(". ");
+                }
             }
         }
         printf("\n");
     }
 }
-void movePlayer(Player *p, char dir)
+void movePlayer(Player *player, char dir)
 {
     switch (dir)
     {
     case 'w':
-        if (p->y > 0)
+        if (player->y > 0)
         {
-            p->y--;
+            player->y--;
         }
 
         break;
     case 's':
-        if (p->y < MAP_HEIGHT - 1)
+        if (player->y < MAP_HEIGHT - 1)
         {
-            p->y++;
+            player->y++;
         }
 
         break;
     case 'a':
-        if (p->x > 0)
+        if (player->x > 0)
         {
-            p->x--;
+            player->x--;
         }
 
         break;
     case 'd':
-        if (p->x < MAP_WIDTH - 1)
+        if (player->x < MAP_WIDTH - 1)
         {
-            p->x++;
+            player->x++;
         }
         break;
 

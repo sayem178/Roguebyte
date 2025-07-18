@@ -5,6 +5,6 @@
 #include <stddef.h>
 #include "enemy.h"
 
-void drawMap(Player p, Enemy e);
+void drawMap(Player player, Enemy enemies[], int enemyCount );
 
 void movePlayer(Player*p, char dir);

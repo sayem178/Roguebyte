@@ -10,6 +10,6 @@ typedef struct {
 } Player;
 
 // Set default values for player
-void initPlayer(Player *p);
+void initPlayer(Player *player);
 
 #endif // PLAYER_H
