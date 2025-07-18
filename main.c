@@ -5,6 +5,7 @@
 #include "map.h"
 #include "player.h"
 #include "enemy.h"
+#include "screen.h"
 
 int main(void)
 {
@@ -23,9 +24,10 @@ int main(void)
         drawMap(player, enemies, MAX_ENEMIES);
         printf("\n use WASD to move, Qto quit:");
         scanf(" %c", &input);
-        if (input=='q') break;
+        if (input == 'q')
+            break;
         movePlayer(&player, input);
-        for (int i = 0; i < MAX_ENEMIES; i++)//to check if the player has bumped into any of the enemies
+        for (int i = 0; i < MAX_ENEMIES; i++) // to check if the player has bumped into any of the enemies
         {
             if (player.x == enemies[i].x && player.y == enemies[i].y && enemies[i].alive)
             {
