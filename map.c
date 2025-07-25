@@ -1,78 +1,54 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 #include "map.h"
-#include "player.h"
-#include "enemy.h"
 
-void drawMap(Player player, Enemy enemies[], int enemyCount)
+void generateRow(char *row, int width)
 {
-    printf("HP: %d | XP: %d | Level: %d\n", player.hp, player.xp, player.level);
-
-    for (size_t i = 0; i < MAP_HEIGHT; i++)
+    for (int i = 0; i < width; i++)
     {
-        for (size_t j = 0; j < MAP_WIDTH; j++)
-        {
-            if (i == player.y && j == player.x)
-            {
-                printf("@ ");
-            }
-            else
-            {
-                int enemyFound = 0;
-                for (int k = 0; k < enemyCount; k++)
-                {
-                    if (i == enemies[k].y && j == enemies[k].x && enemies[k].alive == 1)
-                    {
-                        printf("E ");
-                        enemyFound = 1;
-                        break;
-                    }
-                }
-                if (enemyFound)
-                {
-                    // Enemy was printed, skip printing '.'
-                }
-                else
-                {
-                    printf(". ");
-                }
-            }
-        }
-        printf("\n");
+        row[i] = (rand() % 10 == 0) ? '#' : ' '; // 10% chance
+    }
+    row[width] = '\0';
+}
+
+void initMap(Map *map, int width, int height)
+{
+
+    map->width = width;
+    map->height = height;
+    map->scroll_offset = 0;
+    map->rows = (char **)malloc(sizeof(char *) * MAX_ROWS);
+
+    for (int i = 0; i < MAX_ROWS; i++)
+    {
+        map->rows[i] = (char *)malloc(sizeof(char) * (width + 1));
+        generateRow(map->rows[i], width);
     }
 }
-void movePlayer(Player *player, char dir)
+
+void scrollMap(Map *map)
 {
-    switch (dir)
+    map->scroll_offset++;
+    if (map->scroll_offset + map->height >= MAX_ROWS)
     {
-    case 'w':
-        if (player->y > 0)
-        {
-            player->y--;
-        }
-
-        break;
-    case 's':
-        if (player->y < MAP_HEIGHT - 1)
-        {
-            player->y++;
-        }
-
-        break;
-    case 'a':
-        if (player->x > 0)
-        {
-            player->x--;
-        }
-
-        break;
-    case 'd':
-        if (player->x < MAP_WIDTH - 1)
-        {
-            player->x++;
-        }
-        break;
-
-    default:
-        break;
+        map->scroll_offset = 0; // loop back
     }
+}
+void drawMap(Map *map)
+{
+
+    for (int i = 0; i < map->height; i++)
+    {
+        printf("%s\n", map->rows[map->scroll_offset + i]);
+    }
+}
+void freeMap(Map *map)
+{
+    for (int i = 0; i < MAX_ROWS; i++)
+    {
+        free(map->rows[i]);
+    }
+    free(map->rows);
 }

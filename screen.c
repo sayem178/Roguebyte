@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <sys/ioctl.h> //for low-level input/output control
-#include <unistd.h>
+#include <unistd.h>//to get access to system-level functions or get access to low level od powers on linux
 #include "screen.h"
 
 int getTerminalSize(int *rows, int *cols){

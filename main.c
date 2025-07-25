@@ -1,42 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stddef.h>
+#include <unistd.h> //to get access to system-level functions or get access to low level od powers on linux
 #include <time.h>
 #include "map.h"
-#include "player.h"
-#include "enemy.h"
 #include "screen.h"
-
+#include "player.h"
 int main(void)
 {
 
-    srand(time(NULL));
-    Player player;
-    char input;
-    initPlayer(&player);
+    srand(time(NULL)); // for random seeds so the obstacles aren't same
 
-    Enemy enemies[MAX_ENEMIES];
-    initEnemy(enemies, MAX_ENEMIES);
+    int rows, cols;
+    if (getTerminalSize(&rows, &cols) == -1) // get terminal size
+    {
+        printf("Error getting terminal size.\n");
+        return 1;
+    }
+
+    int mapHeight = rows; // 2 rows for UI maybe?
+    int mapwidth = cols;
+
+    Map gameMap;
+    initMap(&gameMap, mapwidth, mapHeight); // initialize map
+    Player player;
+    initPlayer(&player, mapwidth, mapHeight);
 
     while (1)
     {
         system("clear");
-        drawMap(player, enemies, MAX_ENEMIES);
-        printf("\n use WASD to move, Qto quit:");
-        scanf(" %c", &input);
-        if (input == 'q')
-            break;
-        movePlayer(&player, input);
-        for (int i = 0; i < MAX_ENEMIES; i++) // to check if the player has bumped into any of the enemies
-        {
-            if (player.x == enemies[i].x && player.y == enemies[i].y && enemies[i].alive)
-            {
-                enemies[i].alive = 0;
-                player.xp += 10;
-            }
-        }
-        
+        drawMap(&gameMap);   // makes the map visiable
+        scrollMap(&gameMap); // moves the map vertical scrolling
+        usleep(100000);      // slows the loop to make it visible
     }
-    printf("thanks");
+
+    freeMap(&gameMap); // frees allocated memory from initmap
     return 0;
 }
