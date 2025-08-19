@@ -12,10 +12,10 @@
 #include <direct.h>  // Including standard and platform-specific libraries
 // #define getch _getch
 #else
-#include <termios.h>   // Including standard and platform-specific libraries
-#include <unistd.h>    // Including standard and platform-specific libraries
-#include <sys/ioctl.h> // Including standard and platform-specific libraries
-#include <sys/stat.h>  // Including standard and platform-specific libraries
+#include <termios.h>   // for controlling terminal I/O behavior (input/output settings)
+#include <unistd.h>    // program to talk directly to the OS (files, processes, environment) in Unix/Linux
+#include <sys/ioctl.h> // for low-level device control like getting terminal size, modes
+#include <sys/stat.h>  // for file and directory information & management.
 #endif
 
 // Game constants
