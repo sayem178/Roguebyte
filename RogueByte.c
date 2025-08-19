@@ -1,9 +1,9 @@
-#include <stdio.h>   // for standard input-output{printf, fprintf, fscanf, fread, fwrite, fclose, fopen, fflush, perror}
-#include <stdlib.h>  // for randomization, runing os commands, quit programs with code{ abs, rand, srand, exit, system}
-#include <time.h>    // for generating random number with real time (time)
-#include <stdbool.h> // for boolean function
-#include <string.h>  // fro string functions {strlen, strncpy, strcmp, strrchr, strcspn, memcopy}
-#include <ctype.h>   // for Character handling
+#include <stdio.h>   // Including standard and platform-specific libraries
+#include <stdlib.h>  // Including standard and platform-specific libraries
+#include <time.h>    // Including standard and platform-specific libraries
+#include <stdbool.h> // Including standard and platform-specific libraries
+#include <string.h>  // Including standard and platform-specific libraries
+#include <ctype.h>   // Including standard and platform-specific libraries
 
 // Platform-specific headers
 #ifdef _WIN32
@@ -12,10 +12,10 @@
 #include <direct.h>  // Including standard and platform-specific libraries
 // #define getch _getch
 #else
-#include <termios.h>   // for controlling terminal I/O behavior (input/output settings)
-#include <unistd.h>    // program to talk directly to the OS (files, processes, environment) in Unix/Linux
-#include <sys/ioctl.h> // for low-level device control like getting terminal size, modes
-#include <sys/stat.h>  // for file and directory information & management.
+#include <termios.h>   // Including standard and platform-specific libraries
+#include <unistd.h>    // Including standard and platform-specific libraries
+#include <sys/ioctl.h> // Including standard and platform-specific libraries
+#include <sys/stat.h>  // Including standard and platform-specific libraries
 #endif
 
 // Game constants
@@ -144,7 +144,6 @@ void game_over();                     // Function definition
 void get_player_name();               // Function definition
 void handle_movement(int dx, int dy); // Function definition
 void game_loop();                     // Function definition
-
 // debugging
 //void debug_game_state(); // Function definition
 
@@ -298,9 +297,9 @@ void init_player() // Function definition
     player.score = 0;
 }
 
-void generate_new_row(int y) // Function definition
+void generate_new_row(int y) // Function definitionww
 {
-    bool is_boss_room = (world_offset > 0) && (world_offset % 100 == 0);
+    bool is_boss_room = (world_offset >= 200) && (world_offset % 200 == 0);
 
     for (int x = 0; x < MAP_WIDTH; x++)
     {
@@ -561,7 +560,7 @@ void check_collisions() // Function definition
 void draw_game() // Function definition
 {
     clear_screen();
-    bool is_boss_room = (world_offset > 0) && (world_offset % 100 == 0);
+    bool is_boss_room = (world_offset >= 200) && (world_offset % 200 == 0);
 
     // Draw map
     for (int y = 0; y < MAP_HEIGHT; y++)
@@ -699,11 +698,11 @@ int show_main_menu(bool has_save) // Function definition
         {
             selected = (selected - 1 + option_count) % option_count;
         }
-        else if (ch == 's' || ch == 'S') // Function definition
+        else if (ch == 's' || ch == 'S') 
         {
             selected = (selected + 1) % option_count;
         }
-        else if (ch == '\r' || ch == '\n') // Function definition
+        else if (ch == '\r' || ch == '\n') 
         {
             return has_save ? selected : selected + 1; // Adjust return value
         }
@@ -720,7 +719,7 @@ void load_leaderboard() // Function definition
     }
 
     leaderboard_size = 0;
-    while (fscanf(file, "%49s %d %d",
+    while (fscanf(file, "%50s %d %d",
                   leaderboard[leaderboard_size].name,
                   &leaderboard[leaderboard_size].level,
                   &leaderboard[leaderboard_size].distance) == 3 &&
@@ -762,7 +761,7 @@ bool update_leaderboard_entries() // Function definition
     {
         if (leaderboard_size < MAX_LEADERBOARD)
         {
-            strncpy(leaderboard[leaderboard_size].name, player.name, 49);
+            strncpy(leaderboard[leaderboard_size].name, player.name, 4);
             leaderboard[leaderboard_size].level = player.level;
             leaderboard[leaderboard_size].distance = player.score;
             leaderboard_size++;
@@ -780,7 +779,7 @@ bool update_leaderboard_entries() // Function definition
 
             if (player.score > leaderboard[lowest_index].distance)
             {
-                strncpy(leaderboard[lowest_index].name, player.name, 49);
+                strncpy(leaderboard[lowest_index].name, player.name, 50);
                 leaderboard[lowest_index].level = player.level;
                 leaderboard[lowest_index].distance = player.score;
             }
@@ -1069,25 +1068,25 @@ bool save_file_exists()
 void game_over() // Function definition
 {
     clear_screen();
-    #ifdef _WIN32
-        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 - 1);
-        printf("================================");
-        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2);
-        printf("        GAME OVER!             ");
-        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 1);
-        printf("  Final Score: %-10d      ", player.score);
-        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 2);
-        printf("================================");
-    #else
-        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 - 1);
-        printf("\033[1;31m╔══════════════════════════╗\033[0m");
-        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2);
-        printf("\033[1;31m║      GAME OVER!          ║\033[0m");
-        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 1);
-        printf("\033[1;31m║ Final Score: %-10d  ║\033[0m", player.score);
-        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 2);
-        printf("\033[1;31m╚══════════════════════════╝\033[0m");
-    #endif
+#ifdef _WIN32
+    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 - 1);
+    printf("================================");
+    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2);
+    printf("        GAME OVER!             ");
+    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 1);
+    printf("  Final Score: %-10d      ", player.score);
+    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 2);
+    printf("================================");
+#else
+    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 - 1);
+    printf("\033[1;31m╔══════════════════════════╗\033[0m");
+    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2);
+    printf("\033[1;31m║      GAME OVER!          ║\033[0m");
+    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 1);
+    printf("\033[1;31m║ Final Score: %-10d  ║\033[0m", player.score);
+    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 2);
+    printf("\033[1;31m╚══════════════════════════╝\033[0m");
+#endif
     fflush(stdout);
 
     add_to_leaderboard();
@@ -1327,6 +1326,7 @@ void game_loop() // Function definition
 //      printf("Player: %s (HP: %d/%d)\n", player.name, player.hp, player.max_hp);
 //      printf("Score: %d, Level: %d\n", player.score, player.level);
 //      printf("Save exists: %s\n", save_file_exists() ? "YES" : "NO");
+
 //     FILE *lb = fopen(get_leaderboard_path(), "r");
 //     printf("Leaderboard exists: %s\n", lb ? "YES" : "NO");
 //     if (lb) fclose(lb);
