@@ -1,9 +1,9 @@
-#include <stdio.h>   // Including standard and platform-specific libraries
-#include <stdlib.h>  // Including standard and platform-specific libraries
-#include <time.h>    // Including standard and platform-specific libraries
-#include <stdbool.h> // Including standard and platform-specific libraries
-#include <string.h>  // Including standard and platform-specific libraries
-#include <ctype.h>   // Including standard and platform-specific libraries
+#include <stdio.h>   // for standard input-output{printf, fprintf, fscanf, fread, fwrite, fclose, fopen, fflush, perror}
+#include <stdlib.h>  // for randomization, runing os commands, quit programs with code{ abs, rand, srand, exit, system}
+#include <time.h>    // for generating random number with real time (time)
+#include <stdbool.h> // for boolean function
+#include <string.h>  // fro string functions {strlen, strncpy, strcmp, strrchr, strcspn, memcopy}
+#include <ctype.h>   // for Character handling
 
 // Platform-specific headers
 #ifdef _WIN32
@@ -144,8 +144,9 @@ void game_over();                     // Function definition
 void get_player_name();               // Function definition
 void handle_movement(int dx, int dy); // Function definition
 void game_loop();                     // Function definition
+
 // debugging
-void debug_game_state(); // Function definition
+//void debug_game_state(); // Function definition
 
 // Terminal control implementations
 void clear_screen() // Function definition
@@ -206,11 +207,11 @@ void enable_ansi() // Function definition
 
 void msleep(int milliseconds) // Function definition
 {
-#ifdef _WIN32
-    Sleep(milliseconds);
-#else
-    usleep(milliseconds * 1000);
-#endif
+    #ifdef _WIN32
+        Sleep(milliseconds);
+    #else
+        usleep(milliseconds * 1000);
+    #endif
 }
 
 // Message system implementations
@@ -1068,25 +1069,25 @@ bool save_file_exists()
 void game_over() // Function definition
 {
     clear_screen();
-#ifdef _WIN32
-    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 - 1);
-    printf("================================");
-    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2);
-    printf("        GAME OVER!             ");
-    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 1);
-    printf("  Final Score: %-10d      ", player.score);
-    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 2);
-    printf("================================");
-#else
-    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 - 1);
-    printf("\033[1;31m╔══════════════════════════╗\033[0m");
-    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2);
-    printf("\033[1;31m║      GAME OVER!          ║\033[0m");
-    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 1);
-    printf("\033[1;31m║ Final Score: %-10d  ║\033[0m", player.score);
-    move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 2);
-    printf("\033[1;31m╚══════════════════════════╝\033[0m");
-#endif
+    #ifdef _WIN32
+        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 - 1);
+        printf("================================");
+        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2);
+        printf("        GAME OVER!             ");
+        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 1);
+        printf("  Final Score: %-10d      ", player.score);
+        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 2);
+        printf("================================");
+    #else
+        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 - 1);
+        printf("\033[1;31m╔══════════════════════════╗\033[0m");
+        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2);
+        printf("\033[1;31m║      GAME OVER!          ║\033[0m");
+        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 1);
+        printf("\033[1;31m║ Final Score: %-10d  ║\033[0m", player.score);
+        move_cursor(MAP_WIDTH / 2 - 15, MAP_HEIGHT / 2 + 2);
+        printf("\033[1;31m╚══════════════════════════╝\033[0m");
+    #endif
     fflush(stdout);
 
     add_to_leaderboard();
@@ -1326,7 +1327,6 @@ void game_loop() // Function definition
 //      printf("Player: %s (HP: %d/%d)\n", player.name, player.hp, player.max_hp);
 //      printf("Score: %d, Level: %d\n", player.score, player.level);
 //      printf("Save exists: %s\n", save_file_exists() ? "YES" : "NO");
-
 //     FILE *lb = fopen(get_leaderboard_path(), "r");
 //     printf("Leaderboard exists: %s\n", lb ? "YES" : "NO");
 //     if (lb) fclose(lb);
