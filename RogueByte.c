@@ -1,9 +1,9 @@
-#include <stdio.h>   // Including standard and platform-specific libraries
-#include <stdlib.h>  // Including standard and platform-specific libraries
-#include <time.h>    // Including standard and platform-specific libraries
-#include <stdbool.h> // Including standard and platform-specific libraries
-#include <string.h>  // Including standard and platform-specific libraries
-#include <ctype.h>   // Including standard and platform-specific libraries
+#include <stdio.h>   // for standard input-output{printf, fprintf, fscanf, fread, fwrite, fclose, fopen, fflush, perror}
+#include <stdlib.h>  // for randomization, runing os commands, quit programs with code{ abs, rand, srand, exit, system}
+#include <time.h>    // for generating random number with real time (time)
+#include <stdbool.h> // for boolean function
+#include <string.h>  // fro string functions {strlen, strncpy, strcmp, strrchr, strcspn, memcopy}
+#include <ctype.h>   // for Character handling
 
 // Platform-specific headers
 #ifdef _WIN32
@@ -12,10 +12,10 @@
 #include <direct.h>  // Including standard and platform-specific libraries
 // #define getch _getch
 #else
-#include <termios.h>   // Including standard and platform-specific libraries
-#include <unistd.h>    // Including standard and platform-specific libraries
-#include <sys/ioctl.h> // Including standard and platform-specific libraries
-#include <sys/stat.h>  // Including standard and platform-specific libraries
+#include <termios.h>   // for controlling terminal I/O behavior (input/output settings)
+#include <unistd.h>    // program to talk directly to the OS (files, processes, environment) in Unix/Linux
+#include <sys/ioctl.h> // for low-level device control like getting terminal size, modes
+#include <sys/stat.h>  // for file and directory information & management.
 #endif
 
 // Game constants
