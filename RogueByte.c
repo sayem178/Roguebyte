@@ -2,7 +2,7 @@
 #include <stdlib.h>  // for randomization, runing os commands, quit programs with code{ abs, rand, srand, exit, system}
 #include <time.h>    // for generating random number with real time (time)
 #include <stdbool.h> // for boolean function
-#include <string.h>  // fro string functions {strlen, strncpy, strcmp, strrchr, strcspn, memcopy}
+#include <string.h>  // for string functions {strlen, strncpy, strcmp, strrchr, strcspn, memcopy}
 #include <ctype.h>   // for Character handling
 
 // Platform-specific headers
@@ -477,19 +477,19 @@ void move_enemies() // Function definition
             {
             case 0:
                 if (game_map[enemies[i].y - 1][enemies[i].x] == '_')
-                    enemies[i].y--;
+                    enemies[i].y--;// move down
                 break;
             case 1:
                 if (game_map[enemies[i].y + 1][enemies[i].x] == '_')
-                    enemies[i].y++;
+                    enemies[i].y++;// move up
                 break;
             case 2:
                 if (game_map[enemies[i].y][enemies[i].x - 1] == '_')
-                    enemies[i].x--;
+                    enemies[i].x--;// move left
                 break;
             case 3:
                 if (game_map[enemies[i].y][enemies[i].x + 1] == '_')
-                    enemies[i].x++;
+                    enemies[i].x++;// move right
                 break;
             }
         }
@@ -1152,7 +1152,7 @@ void handle_movement(int dx, int dy) // Function definition
         player.y = new_y;
 
         // Only shift world if not in boss room or boss is dead
-        if (dy < 0 && (!boss_alive || !((world_offset > 0) && (world_offset % 100 == 0))))
+        if (dy < 0 && (!boss_alive || !((world_offset > 200) && (world_offset % 200 == 0))))
         {
             update_score();
             if (player.y < MAP_HEIGHT / 4)
